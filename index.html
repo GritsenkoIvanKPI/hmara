@@ -1046,15 +1046,10 @@ footer{
   .nav-open .nav-toggle span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
   .hero-wrap{ text-align:center; }
   .hero-content{ align-items:center; }
-  .hero-banner{ flex-direction:column; align-items:flex-start; padding: 2rem 1.75rem; border-radius:1.25rem; gap:1.75rem; text-align:left; }
+  .hero-banner{ flex-direction:column; align-items:stretch; padding: 2rem 1.75rem; border-radius:1.25rem; gap:1.75rem; text-align:left; }
   .hero-banner-headline{ max-width:none; }
-  .hero-banner-side{ max-width:none; }
-  .hero-ctas{
-    flex-direction:column;
-    margin-left: -3.25rem;
-    margin-right: -3.25rem;
-    width: calc(100% + 6.5rem);
-  }
+  .hero-banner-side{ max-width:none; align-items:stretch; }
+  .hero-ctas{ flex-direction:column; }
   .hero-content p.lead{ margin: 0; }
   .trust-strip .wrap{ grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
   .trust-item:nth-child(3){ border-left:none; }
@@ -1232,7 +1227,7 @@ footer{
     <div class="wrap">
       <div class="trust-item reveal visible"><strong>10+ let</strong><span>zkušeností na trhu</span></div>
       <div class="trust-item reveal visible reveal-delay-1"><strong>500+</strong><span>dokončených projektů</span></div>
-      <div class="trust-item reveal visible reveal-delay-2"><strong>2–5 let</strong><span>záruka na práce</span></div>
+      <div class="trust-item reveal visible reveal-delay-2"><strong>2 let</strong><span>záruka na práce</span></div>
       <div class="trust-item reveal visible reveal-delay-3"><strong>Praha</strong><span>a přilehlé okolí</span></div>
     </div>
   </div>
@@ -1308,7 +1303,7 @@ footer{
         <p>Rychlá pomoc s běžnými domácími opravami a údržbou. Ať jde o cokoliv drobného, vyřešíme to rychle a spolehlivě.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Od pár dní</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka 2 roky</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1321,7 +1316,7 @@ footer{
         <p>Přesná montáž poliček, skříní a nábytku na míru vašemu prostoru. Čistá práce bez zbytečného nepořádku.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Od pár dní</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka 2 roky</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1334,7 +1329,7 @@ footer{
         <p>Kompletní proměna bytu od jádra po povrchové úpravy. Termín i rozsah prací dohodneme předem.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Do 1 měsíce</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka až 5 let</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1347,7 +1342,7 @@ footer{
         <p>Nové obklady, sanita i osvětlení — koupelnu předěláme od základu během několika týdnů.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Do 2 týdnů</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka až 5 let</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1360,7 +1355,7 @@ footer{
         <p>Podhledy, příčky i akustické úpravy ze sádrokartonu, přesně podle projektu.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Do 2 týdnů</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka až 5 let</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1373,7 +1368,7 @@ footer{
         <p>Povrchové úpravy stěn, podlah a stropů, které dají prostoru nový, čistý vzhled.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Do 2 týdnů</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka 2 roky</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1386,7 +1381,7 @@ footer{
         <p>Rozsáhlejší rekonstrukce rodinných domů — od střechy po fasádu, se stálým dozorem nad průběhem prací.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Do 1 měsíce</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka až 5 let</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1399,7 +1394,7 @@ footer{
         <p>Odborná montáž interiérových i vstupních dveří s důrazem na přesné usazení a zaměření.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Od pár dní</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka 2 roky</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1412,7 +1407,7 @@ footer{
         <p>Instalace sprchových koutů a zástěn s dokonalým utěsněním proti vodě.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Od pár dní</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka 2 roky</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1425,7 +1420,7 @@ footer{
         <p>Bezpečná elektroinstalace, výměna rozvodů i nová zapojení podle platných norem.</p>
         <div class="spec-stats">
           <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>Od pár dní</span>
-          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Záruka až 5 let</span>
+          <span class="spec-stat"><span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="17" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/><path d="M14.5 20c.3-2.2 1.8-3.8 3.8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vlastní tým</span>
         </div>
       </div>
 
@@ -1646,7 +1641,7 @@ footer{
       </div>
       <div class="stat-row">
         <div><strong>500+</strong><span>dokončených projektů</span></div>
-        <div><strong>2–5 let</strong><span>záruka na provedené práce</span></div>
+        <div><strong>2 let</strong><span>záruka na provedené práce</span></div>
         <div><strong>3 typy</strong><span>objektů — byty, domy, komerce</span></div>
       </div>
     </div>
