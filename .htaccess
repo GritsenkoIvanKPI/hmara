@@ -1,0 +1,37 @@
+# ---------- protect the bot token ----------
+# config.php is normally executed by PHP and never served as text, but if
+# PHP is ever misconfigured the raw file would be readable. Deny it outright.
+<FilesMatch "^config\.php$">
+    Require all denied
+</FilesMatch>
+
+# Never serve editor leftovers or the example config as plain text.
+<FilesMatch "\.(bak|old|orig|save|swp|dist|example\.php)$">
+    Require all denied
+</FilesMatch>
+
+# ---------- compression ----------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE application/manifest+json image/svg+xml
+</IfModule>
+
+# ---------- caching ----------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg        "access plus 1 year"
+    ExpiresByType image/png         "access plus 1 year"
+    ExpiresByType image/webp        "access plus 1 year"
+    ExpiresByType image/svg+xml     "access plus 1 year"
+    ExpiresByType text/css          "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/html         "access plus 0 seconds"
+</IfModule>
+
+# ---------- security headers ----------
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>

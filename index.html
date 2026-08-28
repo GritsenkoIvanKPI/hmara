@@ -58,6 +58,9 @@
   --neutral:#7f7f7f;
   --white:#ffffff;
   --border-secondary:#d4d4d8;
+  --alert:#a33c31;
+  --alert-tint:#fdf4f2;
+  --alert-border:#f0d6d0;
 
   --font-display: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
@@ -971,6 +974,49 @@ section{ position:relative; }
 .checkbox-row label{ font-size: .8rem; color: var(--neutral); font-weight:400; }
 .form-fields .btn{ align-self:flex-start; margin-top: .5rem; }
 
+/* honeypot: off-screen rather than display:none, which some bots skip */
+.field-trap{
+  position:absolute;
+  left:-9999px;
+  width:1px; height:1px;
+  overflow:hidden;
+}
+
+.form-fields .btn[data-busy]{
+  pointer-events:none;
+  opacity:.72;
+}
+.form-fields .btn[data-busy] .icon svg{
+  animation: btnSpin .7s linear infinite;
+  transform-origin: center;
+}
+@keyframes btnSpin{ to{ transform: rotate(360deg); } }
+
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"]{
+  border-color: var(--alert);
+  box-shadow: 0 0 0 4px var(--alert-tint);
+}
+
+.form-status{
+  margin-top: .25rem;
+  padding: .95rem 1.15rem;
+  border-radius: .9rem;
+  font-size: .87rem;
+  line-height: 1.55;
+  border: 1px solid transparent;
+}
+.form-status--ok{
+  background: var(--cyan-50);
+  border-color: var(--cyan-100);
+  color: var(--cyan-700);
+}
+.form-status--error{
+  background: var(--alert-tint);
+  border-color: var(--alert-border);
+  color: var(--alert);
+}
+
 /* ============ CONTACT + FOOTER ============ */
 .contact-grid{
   display:grid;
@@ -1705,30 +1751,36 @@ footer{
           <a href="mailto:info@hmarabuild.cz">info@hmarabuild.cz</a>
         </div>
       </div>
-      <form class="form-fields" onsubmit="event.preventDefault(); this.reset(); alert('Děkujeme, ozveme se vám co nejdříve.');">
+      <form class="form-fields" id="leadForm" action="send-form.php" method="post" novalidate>
         <div class="field-row">
-          <div class="field"><label for="f-name">Jméno a příjmení</label><input id="f-name" type="text" placeholder="Jan Novák" required></div>
-          <div class="field"><label for="f-phone">Telefon</label><input id="f-phone" type="tel" placeholder="+420 777 123 456" required></div>
+          <div class="field"><label for="f-name">Jméno a příjmení</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Jan Novák" required></div>
+          <div class="field"><label for="f-phone">Telefon</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+420 777 123 456" required></div>
         </div>
-        <div class="field"><label for="f-email">E-mail</label><input id="f-email" type="email" placeholder="jan@email.cz" required></div>
+        <div class="field"><label for="f-email">E-mail</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="jan@email.cz" required></div>
         <div class="field">
           <label for="f-type">Typ projektu</label>
-          <select id="f-type">
+          <select id="f-type" name="type">
             <option>Handyman / drobné opravy</option>
             <option>Rekonstrukce bytu nebo domu</option>
             <option>Montážní práce</option>
             <option>Jiné</option>
           </select>
         </div>
-        <div class="field"><label for="f-msg">Popis projektu</label><textarea id="f-msg" placeholder="Stručně popište, co potřebujete udělat…"></textarea></div>
+        <div class="field"><label for="f-msg">Popis projektu</label><textarea id="f-msg" name="message" placeholder="Stručně popište, co potřebujete udělat…"></textarea></div>
         <div class="checkbox-row">
-          <input type="checkbox" id="f-gdpr" required>
+          <input type="checkbox" id="f-gdpr" name="gdpr" required>
           <label for="f-gdpr">Souhlasím se zpracováním osobních údajů za účelem vyřízení poptávky.</label>
         </div>
-        <button type="submit" class="btn btn--primary">
-          <span>Odeslat poptávku</span>
+        <!-- spam trap: hidden from people, irresistible to bots -->
+        <div class="field-trap" aria-hidden="true">
+          <label for="f-website">Nevyplňujte toto pole</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn--primary" id="leadSubmit">
+          <span class="btn-label">Odeslat poptávku</span>
           <span class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
+        <p class="form-status" id="leadStatus" role="status" aria-live="polite" hidden></p>
       </form>
     </div>
   </div>
@@ -1831,6 +1883,101 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { rootMargin: '400px' });
     mapObserver.observe(mapFrame);
+  }
+
+  /* ============ LEAD FORM ============ */
+  const leadForm = document.getElementById('leadForm');
+  if (leadForm) {
+    const submitBtn = document.getElementById('leadSubmit');
+    const statusEl  = document.getElementById('leadStatus');
+    const btnLabel  = submitBtn.querySelector('.btn-label');
+    const idleLabel = btnLabel.textContent;
+
+    const MESSAGES = {
+      validation_failed:   'Zkontrolujte prosím vyplněná pole.',
+      rate_limited:        'Poptávku jste už odeslali. Zkuste to prosím za chvíli, nebo nám rovnou zavolejte.',
+      server_not_configured: 'Formulář je dočasně nedostupný. Zavolejte nám prosím na +420 776 070 852.',
+      delivery_failed:     'Poptávku se nepodařilo odeslat. Zavolejte nám prosím na +420 776 070 852.',
+      network:             'Nepodařilo se spojit se serverem. Zkontrolujte připojení a zkuste to znovu.'
+    };
+
+    const FIELD_IDS = { name: 'f-name', phone: 'f-phone', email: 'f-email', gdpr: 'f-gdpr' };
+
+    const setStatus = (text, kind) => {
+      statusEl.textContent = text;
+      statusEl.className = 'form-status form-status--' + kind;
+      statusEl.hidden = false;
+    };
+
+    const clearInvalid = () => {
+      leadForm.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+    };
+
+    const markInvalid = (fields) => {
+      let first = null;
+      Object.keys(fields || {}).forEach(key => {
+        const el = document.getElementById(FIELD_IDS[key]);
+        if (!el) return;
+        el.setAttribute('aria-invalid', 'true');
+        if (!first) first = el;
+      });
+      if (first) first.focus({ preventScroll: false });
+    };
+
+    leadForm.addEventListener('input', (e) => {
+      if (e.target.hasAttribute('aria-invalid')) e.target.removeAttribute('aria-invalid');
+    });
+
+    leadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (submitBtn.hasAttribute('data-busy')) return;
+
+      clearInvalid();
+
+      // let the browser do the obvious checks before we hit the network
+      if (!leadForm.checkValidity()) {
+        leadForm.reportValidity();
+        return;
+      }
+
+      const data = {
+        name:    document.getElementById('f-name').value,
+        phone:   document.getElementById('f-phone').value,
+        email:   document.getElementById('f-email').value,
+        type:    document.getElementById('f-type').value,
+        message: document.getElementById('f-msg').value,
+        gdpr:    document.getElementById('f-gdpr').checked,
+        website: document.getElementById('f-website').value
+      };
+
+      submitBtn.setAttribute('data-busy', '');
+      btnLabel.textContent = 'Odesílám…';
+      statusEl.hidden = true;
+
+      try {
+        const res = await fetch(leadForm.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        let payload = {};
+        try { payload = await res.json(); } catch (_) { /* keep the empty object */ }
+
+        if (res.ok && payload.ok) {
+          leadForm.reset();
+          setStatus('Děkujeme, poptávku jsme přijali. Ozveme se vám do 24 hodin.', 'ok');
+        } else {
+          setStatus(MESSAGES[payload.error] || MESSAGES.delivery_failed, 'error');
+          if (payload.error === 'validation_failed') markInvalid(payload.fields);
+        }
+      } catch (_) {
+        setStatus(MESSAGES.network, 'error');
+      } finally {
+        submitBtn.removeAttribute('data-busy');
+        btnLabel.textContent = idleLabel;
+      }
+    });
   }
 });
 </script>
