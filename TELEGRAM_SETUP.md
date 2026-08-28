@@ -10,18 +10,17 @@ prohlížeč  →  send-form.php  →  api.telegram.org
                config.php (token, nikdy se necommituje)
 ```
 
-## 1. Zjistit ID skupiny
+## 1. ID skupiny
 
-1. Vytvořte skupinu v Telegramu.
-2. Přidejte do ní bota **@Yuriihmara_bot**.
-3. Napište do skupiny libovolnou zprávu.
-4. Otevřete v prohlížeči (TOKEN nahraďte skutečným tokenem):
+Skupina **Hmara Build Заявки** už je napojená, její ID je:
 
-   ```
-   https://api.telegram.org/bot<TOKEN>/getUpdates
-   ```
+```
+-5347964265
+```
 
-5. Najděte `"chat":{"id":-100...}`. To záporné číslo je ID skupiny.
+Kdybyste někdy zakládali novou skupinu: přidejte do ní bota, napište tam
+zprávu a otevřete `https://api.telegram.org/bot<TOKEN>/getUpdates` —
+v odpovědi najdete `"chat":{"id":-100...}`.
 
 ## 2. Nahrát soubory na Hostinger
 

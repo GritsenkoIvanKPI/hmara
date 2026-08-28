@@ -10,9 +10,10 @@ return [
     // From @BotFather. Keep it secret.
     'bot_token' => 'PASTE_BOT_TOKEN_HERE',
 
-    // Where submissions are delivered. A group id is negative,
-    // e.g. -1001234567890. A private chat id is positive.
-    'chat_id' => 'PASTE_CHAT_ID_HERE',
+    // Where submissions are delivered — the "Hmara Build Zayavky" group.
+    // A group id is negative; a private chat id is positive. Harmless on
+    // its own: without the token nobody can post to it.
+    'chat_id' => '-5347964265',
 
     // Optional: mirror every lead to this mailbox as well. Empty = off.
     'notify_email' => '',
