@@ -6,3 +6,7 @@ mobile.png
 
 # Holds the Telegram bot token — must never be committed
 config.php
+
+# Build output for upload — regenerated, not source
+deploy/
+deploy.zip
