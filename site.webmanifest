@@ -1,0 +1,17 @@
+{
+  "name": "HMARA BUILD — stavební a rekonstrukční práce",
+  "short_name": "HMARA BUILD",
+  "description": "Rekonstrukce bytů, koupelen a domů, handyman a montážní práce v Praze a okolí.",
+  "lang": "cs",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a565c",
+  "theme_color": "#0a565c",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
