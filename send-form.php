@@ -53,6 +53,8 @@ if (isset($_GET['selftest'])) {
         'token_length'    => is_array($cfg) ? strlen((string)($cfg['bot_token'] ?? '')) : 0,
         'chat_id'         => is_array($cfg) ? (string)($cfg['chat_id'] ?? '') : '',
         'ext_curl'        => function_exists('curl_init'),
+        'allow_url_fopen' => (bool)ini_get('allow_url_fopen'),
+        'can_send'        => function_exists('curl_init') || (bool)ini_get('allow_url_fopen'),
         'ext_mbstring'    => function_exists('mb_substr'),
         'ext_json'        => function_exists('json_encode'),
         'can_write_tmp'   => is_writable(sys_get_temp_dir()),
@@ -221,21 +223,78 @@ $payload = [
     'disable_web_page_preview' => true,
 ];
 
-$ch = curl_init('https://api.telegram.org/bot' . $token . '/sendMessage');
-curl_setopt_array($ch, [
-    CURLOPT_POST           => true,
-    CURLOPT_POSTFIELDS     => http_build_query($payload),
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT        => 15,
-    CURLOPT_CONNECTTIMEOUT => 8,
-]);
+/**
+ * POST form-encoded data. Uses cURL when the extension exists and falls
+ * back to a stream, because Hostinger's PHP 7.4 ships without ext-curl.
+ *
+ * @return array{body: ?string, status: int, error: string}
+ */
+function httpPost(string $url, array $fields): array
+{
+    $body = http_build_query($fields);
 
-$response = curl_exec($ch);
-$curlErr  = curl_error($ch);
-$httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $body,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 15,
+            CURLOPT_CONNECTTIMEOUT => 8,
+        ]);
+        $response = curl_exec($ch);
+        $status   = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error    = curl_error($ch);
+        curl_close($ch);
 
-if ($response === false || $httpCode !== 200) {
+        return [
+            'body'   => $response === false ? null : (string)$response,
+            'status' => $status,
+            'error'  => $error,
+        ];
+    }
+
+    if (!ini_get('allow_url_fopen')) {
+        return ['body' => null, 'status' => 0, 'error' => 'no curl and allow_url_fopen is off'];
+    }
+
+    $context = stream_context_create([
+        'http' => [
+            'method'        => 'POST',
+            'header'        => "Content-Type: application/x-www-form-urlencoded\r\n"
+                             . 'Content-Length: ' . strlen($body) . "\r\n",
+            'content'       => $body,
+            'timeout'       => 15,
+            // read the body even on a 4xx so the API's reason can be logged
+            'ignore_errors' => true,
+        ],
+        'ssl' => [
+            'verify_peer'      => true,
+            'verify_peer_name' => true,
+        ],
+    ]);
+
+    $response = @file_get_contents($url, false, $context);
+    $status   = 0;
+
+    // $http_response_header is defined in this scope by the stream wrapper
+    if (isset($http_response_header[0]) && preg_match('#\s(\d{3})\s#', $http_response_header[0], $m)) {
+        $status = (int)$m[1];
+    }
+
+    return [
+        'body'   => $response === false ? null : (string)$response,
+        'status' => $status,
+        'error'  => $response === false ? 'stream request failed' : '',
+    ];
+}
+
+$sent     = httpPost('https://api.telegram.org/bot' . $token . '/sendMessage', $payload);
+$response = $sent['body'];
+$httpCode = $sent['status'];
+$curlErr  = $sent['error'];
+
+if ($response === null || $httpCode !== 200) {
     // Log the reason for the operator, but never echo it — the API error
     // text can quote the request and we do not want the token anywhere
     // near a browser response.
