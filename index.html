@@ -720,40 +720,6 @@ section{ position:relative; }
 }
 .portfolio-card h4{ font-family: var(--font-display); font-size: 1.1rem; font-weight:700; color:var(--white); }
 
-/* ============ TESTIMONIALS ============ */
-.testi-grid{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.75rem;
-}
-.testi-card{
-  background: var(--white);
-  border: 1px solid var(--border-secondary);
-  border-radius: 1.5rem;
-  padding: 2rem;
-  display:flex;
-  flex-direction:column;
-  gap: 1.1rem;
-  box-shadow: 0 18px 40px -28px rgba(20,30,32,.25);
-}
-.stars{ display:flex; gap:.2rem; color: var(--green-dim); }
-.stars svg{ width:1rem; height:1rem; fill: #f5b400; }
-.testi-card p.quote{ color: var(--neutral-dark); font-size: .96rem; line-height:1.65; }
-.testi-person{ display:flex; align-items:center; gap:.85rem; margin-top:auto; }
-.testi-person .avatar{
-  width: 2.75rem; height:2.75rem; border-radius:50%;
-  object-fit: cover;
-  flex-shrink:0;
-}
-.testi-person strong{ display:block; font-size:.9rem; }
-.testi-person span{ font-size:.78rem; color:var(--neutral); }
-.google-badge{
-  display:flex; align-items:center; justify-content:center; gap:2.5rem; flex-wrap:wrap;
-  margin-top: 3rem;
-}
-.google-badge .rating{ display:flex; align-items:center; gap:.7rem; }
-.google-badge .rating strong{ font-size:1.6rem; font-family:var(--font-display); }
-
 /* ============ PROCESS ============ */
 .process-list{
   display:grid;
@@ -1068,7 +1034,6 @@ footer{
   .trust-item:nth-child(3){ border-left:none; }
   .services-grid{ grid-template-columns: 1fr; }
   .spec-grid{ grid-template-columns: 1fr; }
-  .testi-grid{ grid-template-columns: 1fr; }
   .process-list{ grid-template-columns: repeat(3,1fr); row-gap: 2.5rem; }
   .process-item::after{ display:none; }
   .geo-wrap{ grid-template-columns:1fr; }
@@ -1094,8 +1059,6 @@ footer{
   /* full-width buttons on mobile */
   .btn{ width:100%; justify-content:center; }
   .cta-actions{ flex-direction:column; align-items:stretch; width:100%; }
-  .google-badge{ flex-direction:column; }
-  .google-badge .rating{ justify-content:center; }
 }
 @media (max-width: 640px){
   .footer-legal{ flex-direction:column; align-items:flex-start; gap:.45rem; }
@@ -1130,9 +1093,8 @@ footer{
   .section-head{ gap:1rem; }
   .section-head p{ font-size:1rem; }
 
-  /* service / testimonial cards: reclaim a touch of side padding so text runs longer per line */
+  /* service cards: reclaim a touch of side padding so text runs longer per line */
   .service-card{ padding:1.75rem; }
-  .testi-card{ padding:1.75rem; }
 }
 </style>
 </head>
@@ -1505,67 +1467,8 @@ footer{
   </div>
 </section>
 
-<!-- ============ TESTIMONIALS ============ -->
-<section class="section-pad light-bg" id="recenze">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow eyebrow--light"><span class="dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.6 6.6L21 10l-5 4.4L17.4 21 12 17.3 6.6 21 8 14.4 3 10l6.4-1.4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>Recenze</span>
-      <h2>Co říkají naši <span class="accent">klienti</span></h2>
-      <p>Hodnocení sbíráme přes Google — podívejte se, jak dopadly naše realizace.</p>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card reveal">
-        <div class="stars">
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-        </div>
-        <p class="quote">„Rekonstrukci koupelny zvládli za necelé dva týdny, přesně jak slíbili. Čistá práce, žádné nečekané vícepráce.“</p>
-        <div class="testi-person">
-          <img class="avatar" src="images/testimonial-petra.jpg" alt="Petra N.">
-          <div><strong>Petra N.</strong><span>Praha – Vinohrady</span></div>
-        </div>
-      </div>
-      <div class="testi-card reveal reveal-delay-1">
-        <div class="stars">
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-        </div>
-        <p class="quote">„Konečně firma, která dodrží termín. Montáž vestavěné skříně i drobné opravy po domě zvládli za jeden den.“</p>
-        <div class="testi-person">
-          <img class="avatar" src="images/testimonial-martin.jpg" alt="Martin K.">
-          <div><strong>Martin K.</strong><span>Praha – Smíchov</span></div>
-        </div>
-      </div>
-      <div class="testi-card reveal reveal-delay-2">
-        <div class="stars">
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-          <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>
-        </div>
-        <p class="quote">„Rekonstrukce celého bytu proběhla bez stresu — od poptávky po předání to trvalo necelý měsíc.“</p>
-        <div class="testi-person">
-          <img class="avatar" src="images/testimonial-couple.jpg" alt="Jana a Tomáš">
-          <div><strong>Jana a Tomáš</strong><span>Praha – Dejvice</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="google-badge reveal">
-      <div class="rating"><strong>4.9</strong><div class="stars"><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg></div></div>
-      <a href="#" class="btn btn--dark"><span>Recenze na Google</span><span class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-    </div>
-  </div>
-</section>
-
 <!-- ============ PROCESS ============ -->
-<section class="section-pad tint-bg" id="proces">
+<section class="section-pad light-bg" id="proces">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow eyebrow--light"><span class="dot"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="1.7"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>Jak to funguje</span>
