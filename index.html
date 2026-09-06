@@ -759,6 +759,66 @@ section{ position:relative; }
 }
 .portfolio-card h4{ font-family: var(--font-display); font-size: 1.1rem; font-weight:700; color:var(--white); }
 
+/* ============ GOOGLE REVIEWS ============ */
+.reviews-summary{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 1.25rem;
+  flex-wrap:wrap;
+  margin-bottom: 3rem;
+}
+.reviews-score{
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--green);
+  letter-spacing: -.02em;
+}
+.reviews-summary .meta{ display:flex; flex-direction:column; gap:.3rem; }
+.reviews-stars{ display:flex; gap:.15rem; }
+.reviews-stars svg{ width:1.05rem; height:1.05rem; fill:#f5b400; }
+.reviews-stars svg.is-empty{ fill: rgba(255,255,255,.22); }
+.reviews-count{ font-size:.85rem; color: rgba(255,255,255,.6); }
+
+.reviews-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+.review-card{
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 1.4rem;
+  padding: 1.75rem;
+  display:flex;
+  flex-direction:column;
+  gap: 1.1rem;
+}
+.review-card .quote{
+  font-size: .93rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,.78);
+}
+.review-person{ display:flex; align-items:center; gap:.85rem; margin-top:auto; }
+.review-person .avatar{
+  width:2.6rem; height:2.6rem; border-radius:50%;
+  object-fit:cover; flex-shrink:0;
+  background: rgba(255,255,255,.1);
+}
+.review-person .initial{
+  width:2.6rem; height:2.6rem; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(200,244,97,.16);
+  color: var(--green);
+  font-weight:700; font-size:.95rem;
+  flex-shrink:0;
+}
+.review-person strong{ display:block; font-size:.9rem; color: var(--white); }
+.review-person span{ font-size:.78rem; color: rgba(255,255,255,.55); }
+.reviews-cta{ display:flex; justify-content:center; margin-top: 3rem; }
+
 /* ============ PROCESS ============ */
 .process-list{
   display:grid;
@@ -1116,6 +1176,7 @@ footer{
   .trust-item:nth-child(3){ border-left:none; }
   .services-grid{ grid-template-columns: 1fr; }
   .spec-grid{ grid-template-columns: 1fr; }
+  .reviews-grid{ grid-template-columns: repeat(2,1fr); }
   .process-list{ grid-template-columns: repeat(3,1fr); row-gap: 2.5rem; }
   .process-item::after{ display:none; }
   .geo-wrap{ grid-template-columns:1fr; }
@@ -1147,6 +1208,7 @@ footer{
   .footer-legal .sep{ display:none; }
   .about-cards{ grid-template-columns:1fr; }
   .field-row{ grid-template-columns:1fr; }
+  .reviews-grid{ grid-template-columns: 1fr; }
   .process-list{ grid-template-columns: repeat(2,1fr); }
   .contact-grid{ grid-template-columns: 1fr; }
   .form-panel, .form-fields{ padding: 2.25rem; }
@@ -1631,6 +1693,35 @@ footer{
   </div>
 </section>
 
+<!-- ============ GOOGLE REVIEWS ============ -->
+<!-- hidden until google-reviews.php returns at least one review -->
+<section class="section-pad dark-bg" id="recenze" hidden>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow eyebrow--dark"><span class="dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.6 6.6L21 10l-5 4.4L17.4 21 12 17.3 6.6 21 8 14.4 3 10l6.4-1.4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>Recenze</span>
+      <h2>Co říkají naši <span class="accent">klienti</span></h2>
+      <p>Hodnocení sbíráme přes Google — níže jsou skutečné recenze našich zákazníků.</p>
+    </div>
+
+    <div class="reviews-summary reveal" id="reviewsSummary" hidden>
+      <span class="reviews-score" id="reviewsScore"></span>
+      <span class="meta">
+        <span class="reviews-stars" id="reviewsStars"></span>
+        <span class="reviews-count" id="reviewsCount"></span>
+      </span>
+    </div>
+
+    <div class="reviews-grid" id="reviewsGrid"></div>
+
+    <div class="reviews-cta reveal">
+      <a href="#" class="btn btn--primary" id="reviewsLink" target="_blank" rel="noopener noreferrer">
+        <span>Recenze na Google</span>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PROCESS ============ -->
 <section class="section-pad light-bg" id="proces">
   <div class="wrap">
@@ -1883,6 +1974,68 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { rootMargin: '400px' });
     mapObserver.observe(mapFrame);
+  }
+
+  /* ============ GOOGLE REVIEWS ============ */
+  const reviewsSection = document.getElementById('recenze');
+  if (reviewsSection) {
+    const grid = document.getElementById('reviewsGrid');
+
+    const starSvg = (filled) =>
+      '<svg viewBox="0 0 20 20"' + (filled ? '' : ' class="is-empty"') +
+      '><path d="M10 1l2.6 5.9L19 7.6l-4.7 4.3L15.5 19 10 15.6 4.5 19l1.2-7.1L1 7.6l6.4-.7z"/></svg>';
+
+    const stars = (n) => {
+      let out = '';
+      for (let i = 1; i <= 5; i++) out += starSvg(i <= n);
+      return out;
+    };
+
+    const esc = (str) => {
+      const d = document.createElement('div');
+      d.textContent = str == null ? '' : String(str);
+      return d.innerHTML;
+    };
+
+    fetch('google-reviews.php')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data || !data.ok || !Array.isArray(data.reviews) || data.reviews.length === 0) {
+          return; // nothing to show — the section stays hidden
+        }
+
+        grid.innerHTML = data.reviews.map((r, i) => {
+          const avatar = r.photo
+            ? '<img class="avatar" src="' + esc(r.photo) + '" alt="" loading="lazy" referrerpolicy="no-referrer">'
+            : '<span class="initial">' + esc((r.author || '?').trim().charAt(0).toUpperCase()) + '</span>';
+          return '' +
+            '<article class="review-card reveal' + (i ? ' reveal-delay-' + Math.min(i, 3) : '') + '">' +
+              '<div class="reviews-stars">' + stars(r.rating) + '</div>' +
+              '<p class="quote">' + esc(r.text) + '</p>' +
+              '<div class="review-person">' + avatar +
+                '<div><strong>' + esc(r.author) + '</strong><span>' + esc(r.relative) + '</span></div>' +
+              '</div>' +
+            '</article>';
+        }).join('');
+
+        if (typeof data.rating === 'number' && data.total > 0) {
+          document.getElementById('reviewsScore').textContent =
+            data.rating.toFixed(1).replace('.', ',');
+          document.getElementById('reviewsStars').innerHTML = stars(Math.round(data.rating));
+          // "hodnocení" does not inflect for number here
+          document.getElementById('reviewsCount').textContent =
+            data.total + ' hodnocení na Google';
+          document.getElementById('reviewsSummary').hidden = false;
+        }
+
+        if (data.mapsUrl) document.getElementById('reviewsLink').href = data.mapsUrl;
+
+        reviewsSection.hidden = false;
+
+        // the reveal observer already ran, so show these straight away
+        reviewsSection.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+      })
+      .catch(() => { /* leave the section hidden */ });
   }
 
   /* ============ LEAD FORM ============ */
